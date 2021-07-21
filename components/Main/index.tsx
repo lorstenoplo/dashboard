@@ -1,12 +1,16 @@
 import React from "react";
+import { useStateValue } from "../../context/StateProvider";
 
 export const Main: React.FC = () => {
+  const { state } = useStateValue();
+  const p = state.selectedProduct;
+
   return (
     <div className="bg-white flex flex-auto rounded-tl-xl border-l border-gray-300 shadow-xl">
       <div className="w-4/5 flex flex-col">
         <div className="flex justify-between items-center bg-white rounded-tl-xl h-16 flex-none px-4 py-6 border-b">
           <div className="flex flex-col flex-auto space-y-1">
-            <strong>Product Name</strong>
+            <strong>{p?.title || "Product Name"}</strong>
             <input
               type="text"
               className="text-sm placeholder-gray-600 text-black outline-none w-2/5  border-dashed focus:border-b-2 border-b-2 border-opacity-0 focus:border-opacity-100 border-gray-400"
@@ -50,13 +54,28 @@ export const Main: React.FC = () => {
             </svg>
           </div>
         </div>
-        <div className="flex-col flex-auto overflow-auto bg-white p-4 space-y-6">
-          <div className="bg-gray-300 h-72 rounded"></div>
+        <div
+          className="flex flex-col flex-auto justify-center overflow-y-scroll bg-white p-4 space-y-6 scroll-hidden"
+          style={{ height: "calc(100vh - 10rem)" }}
+        >
+          {/* <div className="bg-gray-300 h-72 rounded"></div> */}
+
+          <img
+            src={p?.imageURL}
+            alt={p?.title}
+            className="h-64 object-contain my-6 bg-gray-300 rounded py-6"
+          />
+
           <div className="bg-gray-100 h-auto rounded p-3">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
             suscipit quaerat quod, accusantium ipsa eum officiis quam, accusamus
             sapiente amet sequi, quos quas qui aliquid. Aperiam enim rem fugit
             odit.
+          </div>
+
+          <div className="flex justify-between px-2">
+            <strong>${p?.price}</strong>
+            <p>Rating: {p?.rating}</p>
           </div>
         </div>
         <div className="h-24 flex items-center justify-between flex-none bg-white border-t p-4">
