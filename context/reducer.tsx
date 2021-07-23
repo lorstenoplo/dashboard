@@ -11,6 +11,11 @@ export const reducer: Reducer<ContextDefaultType, Actions> = (
         ...state,
         selectedProduct: action.value,
       };
+    case "CLEAR_PRODUCT_SELECTION":
+      return {
+        ...state,
+        selectedProduct: null,
+      };
     default:
       return state;
   }

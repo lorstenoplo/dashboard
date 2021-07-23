@@ -2,13 +2,8 @@ import Head from "next/head";
 import { Main } from "../components/Main";
 import { Sidebar } from "../components/Sidebar";
 import { Submenu } from "../components/Submenu";
-import { ProductsType } from "../types/Products";
 
-type Props = {
-  products: ProductsType;
-};
-
-export default function Home({ products }: Props) {
+export default function Home() {
   return (
     <div className="flex min-h-screen bg-gray-100 ">
       <Head>
@@ -21,22 +16,8 @@ export default function Home({ products }: Props) {
       </Head>
 
       <Sidebar />
-      <Submenu products={products} />
+      <Submenu />
       <Main />
     </div>
   );
-}
-
-export async function getStaticProps() {
-  const data = await fetch(
-    "https://goloop-micro-products.vercel.app/api/products"
-  );
-
-  const { products } = await data.json();
-
-  return {
-    props: {
-      products,
-    },
-  };
 }

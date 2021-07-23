@@ -29,3 +29,12 @@
 .scroll-hidden::-webkit-scrollbar {
   display: none;
 }
+
+.modal {
+  transition: opacity 0.28s ease;
+}
+
+body.modal-active {
+  overflow-x: hidden;
+  overflow-y: visible !important;
+}

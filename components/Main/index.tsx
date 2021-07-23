@@ -1,9 +1,32 @@
 import React from "react";
 import { useStateValue } from "../../context/StateProvider";
+import { useQueryClient } from "react-query";
+
+// Get QueryClient from the context
 
 export const Main: React.FC = () => {
-  const { state } = useStateValue();
+  const { state, dispatch } = useStateValue();
   const p = state.selectedProduct;
+  const queryClient = useQueryClient();
+
+  const deleteProduct = async () => {
+    if (p?._id) {
+      const res = await fetch(
+        `http://localhost:3001/api/deleteProduct/${p?._id}`
+      ).then((r) => r.json());
+
+      if (res.deleted) {
+        queryClient.invalidateQueries("products");
+        dispatch({
+          type: "CLEAR_PRODUCT_SELECTION",
+          value: null,
+        });
+        return;
+      } else {
+        console.log(res);
+      }
+    }
+  };
 
   return (
     <div className="bg-white flex flex-auto rounded-tl-xl border-l border-gray-300 shadow-xl">
@@ -84,7 +107,10 @@ export const Main: React.FC = () => {
               Add details +
             </button>
 
-            <button className="bg-gray-300 rounded p-2 hover:bg-gray-400 focus:ring-2 ring-gray-500 ring-offset-2">
+            <button
+              disabled={!p}
+              className="bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed rounded p-2 hover:bg-gray-400 focus:ring-2 ring-gray-500 ring-offset-2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -102,7 +128,11 @@ export const Main: React.FC = () => {
             </button>
           </div>
 
-          <button className="bg-red-500 rounded py-2 px-4 text-white focus:ring-2 ring-red-500 ring-offset-2 hover:bg-red-600 flex items-center">
+          <button
+            disabled={!p}
+            onClick={deleteProduct}
+            className="bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed rounded py-2 px-4 text-white focus:ring-2 ring-red-500 ring-offset-2 hover:bg-red-600 flex items-center"
+          >
             Delete
             <svg
               xmlns="http://www.w3.org/2000/svg"

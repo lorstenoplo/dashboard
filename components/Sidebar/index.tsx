@@ -12,13 +12,13 @@ export const Sidebar = () => {
             alt=""
           />
         </a>
-        {[1, 2, 3, 4].map(() => (
-          <SidebarIcon />
+        {[1, 2, 3, 4].map((_, i) => (
+          <SidebarIcon key={i} />
         ))}
       </div>
       <div className="flex flex-col space-y-4">
-        {[1, 2, 3].map(() => (
-          <SidebarIcon />
+        {[1, 2, 3].map((_, i) => (
+          <SidebarIcon key={i + 10} />
         ))}
       </div>
     </div>
