@@ -1,31 +1,30 @@
 import React from "react";
 import { useStateValue } from "../../context/StateProvider";
-import { useQueryClient } from "react-query";
+// import { useQueryClient } from "react-query";
 
 // Get QueryClient from the context
 
 export const Main: React.FC = () => {
-  const { state, dispatch } = useStateValue();
+  const { state } = useStateValue();
   const p = state.selectedProduct;
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const deleteProduct = async () => {
-    if (p?._id) {
-      const res = await fetch(
-        `http://localhost:3001/api/deleteProduct/${p?._id}`
-      ).then((r) => r.json());
-
-      if (res.deleted) {
-        queryClient.invalidateQueries("products");
-        dispatch({
-          type: "CLEAR_PRODUCT_SELECTION",
-          value: null,
-        });
-        return;
-      } else {
-        console.log(res);
-      }
-    }
+    // if (p?._id) {
+    //   const res = await fetch(
+    //     `http://localhost:3001/api/deleteProduct/${p?._id}`
+    //   ).then((r) => r.json());
+    //   if (res.deleted) {
+    //     queryClient.invalidateQueries("products");
+    //     dispatch({
+    //       type: "CLEAR_PRODUCT_SELECTION",
+    //       value: null,
+    //     });
+    //     return;
+    //   } else {
+    //     console.log(res);
+    //   }
+    // }
   };
 
   return (
